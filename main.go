@@ -12,8 +12,6 @@ import (
 var templates map[string]*template.Template
 
 func init() {
-	noteStore["1"] = Note{"text/template", "Template generates textual output", time.Now()}
-
 	if templates == nil {
 		templates = make(map[string]*template.Template)
 	}
