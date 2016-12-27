@@ -4,7 +4,10 @@ import (
 	"net/http"
 )
 
-func getNotes(w http.ResponseWriter, r *http.Request)   {}
+func getNotes(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "index", "base", noteStore)
+}
+
 func addNote(w http.ResponseWriter, r *http.Request)    {}
 func saveNote(w http.ResponseWriter, r *http.Request)   {}
 func editNote(w http.ResponseWriter, r *http.Request)   {}
