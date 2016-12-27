@@ -52,4 +52,14 @@ func updateNote(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func deleteNote(w http.ResponseWriter, r *http.Request) {}
+// Handler for `HTTP GET /notes/delete/{id}`
+func deleteNote(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	k := vars["id"]
+	if _, ok := noteStore[k]; ok {
+		delete(noteStore, k)
+	} else {
+		http.Error(w, "Could not find the resource to delete.", http.StatusBadRequest)
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
+}
