@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-    "time"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -12,7 +12,7 @@ import (
 var templates map[string]*template.Template
 
 func init() {
-    noteStore["1"] = Note{ "text/template", "Template generates textual output", time.Now() }
+	noteStore["1"] = Note{"text/template", "Template generates textual output", time.Now()}
 
 	if templates == nil {
 		templates = make(map[string]*template.Template)
@@ -39,11 +39,11 @@ func main() {
 	fs := http.FileServer(http.Dir("public"))
 	r.Handle("/public/", fs)
 	r.HandleFunc("/", getNotes)
-	r.HandleFunc("notes/add", addNote)
-	r.HandleFunc("notes/save", saveNote)
-	r.HandleFunc("notes/edit/{id}", editNote)
-	r.HandleFunc("notes/update/{id}", updateNote)
-	r.HandleFunc("notes/delete/{id}", deleteNote)
+	r.HandleFunc("/notes/add", addNote)
+	r.HandleFunc("/notes/save", saveNote)
+	r.HandleFunc("/notes/edit/{id}", editNote)
+	r.HandleFunc("/notes/update/{id}", updateNote)
+	r.HandleFunc("/notes/delete/{id}", deleteNote)
 
 	server := &http.Server{
 		Addr:    ":8080",
