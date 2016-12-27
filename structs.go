@@ -10,6 +10,11 @@ type Note struct {
 	CreatedOn   time.Time
 }
 
+type EditNote struct {
+	Note
+	Id string
+}
+
 var noteStore = make(map[string]Note)
 
 var id int = 0

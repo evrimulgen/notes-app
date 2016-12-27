@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 // Handler for `HTTP GET /`
@@ -25,6 +27,29 @@ func saveNote(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusFound)
 }
 
-func editNote(w http.ResponseWriter, r *http.Request)   {}
-func updateNote(w http.ResponseWriter, r *http.Request) {}
+// Handler for `HTTP GET /notes/edit/{id}`
+func editNote(w http.ResponseWriter, r *http.Request) {
+	var viewModel EditNote
+	vars := mux.Vars(r)
+	k := vars["id"]
+	if note, ok := noteStore[k]; ok {
+		viewModel = EditNote{note, k}
+	} else {
+		http.Error(w, "Could not find resource to edit.", http.StatusBadRequest)
+	}
+	renderTemplate(w, "edit", "base", viewModel)
+}
+
+// Handler for `HTTP GET /notes/update/{id}`
+func updateNote(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	k := vars["id"]
+	if note, ok := noteStore[k]; ok {
+		noteStore[k] = Note{r.PostFormValue("title"), r.PostFormValue("description"), note.CreatedOn}
+	} else {
+		http.Error(w, "Could note find the resource to update.", http.StatusBadRequest)
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
+}
+
 func deleteNote(w http.ResponseWriter, r *http.Request) {}

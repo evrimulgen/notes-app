@@ -4,7 +4,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
 )
